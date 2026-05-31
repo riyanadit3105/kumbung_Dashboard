@@ -6,10 +6,10 @@
 //   field4 = Water Level (%)
 //   field5 = State (0=NORMAL,1=COOLING,2=HUMIDIFY,3=INTRUSION,4=FAULT)
 
-export const TS_CHANNEL_ID = '3396691' // update if needed
-export const TS_READ_KEY = 'O2781H5JSI2BVFZ0' 
-export const TS_API_KEY = '70JK2S31O47R00ZP'
-export const TS_BASE = 'https://api.thingspeak.com'
+export const TS_CHANNEL_ID = process.env.NEXT_PUBLIC_TS_CHANNEL_ID ?? '3396691' // public channel id
+export const TS_READ_KEY = process.env.TS_READ_KEY ?? 'O2781H5JSI2BVFZ0'
+export const TS_API_KEY = process.env.TS_API_KEY ?? '70JK2S31O47R00ZP'
+export const TS_BASE = process.env.TS_BASE ?? 'https://api.thingspeak.com'
 
 export type SystemState = 0 | 1 | 2 | 3 | 4
 

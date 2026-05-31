@@ -6,7 +6,7 @@ import {
   ResponsiveContainer, ReferenceLine, Area, AreaChart, BarChart, Bar, Cell
 } from 'recharts'
 import {
-  SensorReading, SystemState, STATE_META, fetchFeeds, fetchLatest, TS_CHANNEL_ID
+  SensorReading, SystemState, STATE_META, TS_CHANNEL_ID
 } from '@/lib/thingspeak'
 
 interface Props {
