@@ -1,13 +1,13 @@
-import { fetchFeeds, fetchLatest } from '@/lib/thingspeak'
+import { fetchFeeds, fetchLatest, SensorReading } from '@/lib/thingspeak'
 import DashboardClient from '@/components/DashboardClient'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 15
 
 export default async function HomePage() {
-  let feeds = []
-  let latest = null
-  let fetchError = null
+  let feeds: SensorReading[] = []
+  let latest: SensorReading | null = null
+  let fetchError: string | null = null
 
   try {
     ;[feeds, latest] = await Promise.all([fetchFeeds(80), fetchLatest()])

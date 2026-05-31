@@ -486,7 +486,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                   key={tab.key}
                   onClick={() => setActiveChart(tab.key as 'climate' | 'sensors')}
                   style={{
-                    padding: '5px 14px', borderRadius: 5, border: 'none', cursor: 'pointer',
+                    padding: '5px 14px', borderRadius: 5, cursor: 'pointer',
                     fontSize: 11, fontFamily: 'IBM Plex Mono',
                     background: activeChart === tab.key ? '#161b22' : 'transparent',
                     color: activeChart === tab.key ? '#e6edf3' : '#8b949e',
