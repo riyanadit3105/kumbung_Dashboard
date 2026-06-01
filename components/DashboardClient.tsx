@@ -502,8 +502,8 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
           </div>
         </div>
 
-        {/* CHARTS — 2x2 GRID */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
+        {/* CHARTS — 1 COLUMN (4 ROWS) */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 20, marginBottom: 20 }}>
 
           {/* Chart 1: Suhu */}
           <div style={{
@@ -514,7 +514,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
               🌡 Grafik Suhu
             </div>
             <ResponsiveContainer width="100%" height={240}>
-              <AreaChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
+>              <AreaChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <defs>
                   <linearGradient id="gradSuhu" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#58a6ff" stopOpacity={0.15} />
@@ -550,7 +550,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
               💧 Grafik Kelembapan
             </div>
             <ResponsiveContainer width="100%" height={240}>
-              <AreaChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
+>              <AreaChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <defs>
                   <linearGradient id="gradHum" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#d2a8ff" stopOpacity={0.15} />
@@ -564,7 +564,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                   tickLine={false} axisLine={false} width={40} />
                 <Tooltip content={<CustomTooltip />} />
                 <ReferenceLine y={80} stroke="#d2a8ff44" strokeDasharray="4 4"
-                  label={{ value: '80% target', position: 'right', fill: '#d2a8ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                  label={{ value: '80% target', position: 'right', fill: '#d2a8ff', fontSize: 12, fontFamily: 'IBM Plex Mono' }} />
                 <Area type="monotone" dataKey="kelembapan" stroke="#d2a8ff" strokeWidth={2}
                   fill="url(#gradHum)" name="Kelembapan (%)" dot={false} activeDot={{ r: 4, fill: '#d2a8ff' }} />
               </AreaChart>
@@ -584,7 +584,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
               💡 Grafik Cahaya (LDR)
             </div>
             <ResponsiveContainer width="100%" height={240}>
-              <LineChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
+              <LineChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
                 <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
@@ -612,7 +612,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
               💦 Grafik Level Tangki Air
             </div>
             <ResponsiveContainer width="100%" height={240}>
-              <LineChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
+              <LineChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
                 <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
