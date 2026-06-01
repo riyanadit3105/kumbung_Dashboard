@@ -14,6 +14,7 @@
   --muted: #cbd5e1;
   --text: #f8fafc;
   --text-dim: #cbd5e1;
+  --text-nav: #cbd5e1;
 }
 
 * {
@@ -100,4 +101,5 @@ html, body {
   --muted: #ffffff; /* dim text */
   --text: #0f1724; /* near-black for readability */
   --text-dim: #ffffff;
+  --text-nav: #0f1724;
 }

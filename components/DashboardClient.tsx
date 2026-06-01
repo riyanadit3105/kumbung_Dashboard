@@ -294,7 +294,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
               <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', lineHeight: 1.2 }}>
                 KUMBUNG JAMUR TIRAM
               </div>
-              <div style={{ fontSize: 13, color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
+              <div style={{ fontSize: 13, color: 'var(--text-nav)', letterSpacing: '0.08em' }}>
                 IoT CLIMATE DASHBOARD
               </div>
             </div>
@@ -322,7 +322,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: 13, color: 'var(--text-dim)' }}>
+          <span style={{ fontSize: 13, color: 'var(--text-nav)' }}>
             Update: {lastUpdate.toLocaleTimeString('id-ID')}
           </span>
 
@@ -332,7 +332,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             style={{
               background: autoRefresh ? '#0d2818' : '#21262d',
               border: `1px solid ${autoRefresh ? '#3fb95055' : '#30363d'}`,
-              color: autoRefresh ? '#3fb950' : 'var(--text-dim)',
+              color: autoRefresh ? '#3fb950' : 'var(--text-nav)',
               padding: '5px 12px', borderRadius: 6, fontSize: 13, cursor: 'pointer',
               fontFamily: 'IBM Plex Mono', display: 'flex', alignItems: 'center', gap: 6
             }}
@@ -341,7 +341,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
           </button>
 
           {autoRefresh && (
-            <span style={{ fontSize: 13, color: 'var(--text-dim)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>
+            <span style={{ fontSize: 13, color: 'var(--text-nav)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>
               ⏳ {countdown}s
             </span>
           )}
@@ -721,7 +721,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
         <footer style={{
           marginTop: 32, paddingTop: 16, borderTop: '1px solid #21262d',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          fontSize: 13, color: 'var(--text-dim)'
+          fontSize: 13, color: 'var(--text-nav)'
         }}>
           <span>
             Kumbung Jamur Tiram IoT — Sistem Kendali Iklim Mikro Adaptif
