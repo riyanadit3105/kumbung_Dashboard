@@ -558,7 +558,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
                 <YAxis domain={[40, 100]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={false} width={40} />
@@ -586,7 +586,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             <ResponsiveContainer width="100%" height={240}>
               <LineChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
                 <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={false} width={40} />
@@ -614,7 +614,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             <ResponsiveContainer width="100%" height={240}>
               <LineChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
                 <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={false} width={40} />
