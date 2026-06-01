@@ -90,15 +90,15 @@ function Gauge({ value, min, max, unit, label, color, thresholdLow, thresholdHig
         )}
         {/* Value */}
         <text x={cx} y={cy + 20} textAnchor="middle" fill={isWarn ? '#f85149' : color}
-          style={{ fontFamily: 'IBM Plex Mono', fontSize: 18, fontWeight: 600 }}>
+          style={{ fontFamily: 'IBM Plex Mono', fontSize: 20, fontWeight: 600 }}>
           {value === null ? '—' : value.toFixed(label === 'Kelembapan' ? 0 : 1)}
         </text>
-        <text x={cx} y={cy + 32} textAnchor="middle" fill="#8b949e"
-          style={{ fontFamily: 'IBM Plex Mono', fontSize: 10 }}>
+        <text x={cx} y={cy + 32} textAnchor="middle" fill="var(--text-dim)"
+          style={{ fontFamily: 'IBM Plex Mono', fontSize: 13 }}>
           {unit}
         </text>
       </svg>
-      <span style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+      <span style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
         {label}
       </span>
     </div>
@@ -114,14 +114,14 @@ function MetricCard({ label, value, unit, color = '#e6edf3', sub }: {
       background: '#161b22', border: '1px solid #30363d', borderRadius: 8,
       padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 6
     }}>
-      <span style={{ fontSize: 10, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <span style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         {label}
       </span>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
         <span style={{ fontSize: 28, fontWeight: 600, color, lineHeight: 1 }}>{value}</span>
-        {unit && <span style={{ fontSize: 13, color: '#8b949e' }}>{unit}</span>}
+        {unit && <span style={{ fontSize: 15, color: '#cbd5e1' }}>{unit}</span>}
       </div>
-      {sub && <span style={{ fontSize: 11, color: '#8b949e' }}>{sub}</span>}
+      {sub && <span style={{ fontSize: 13, color: '#cbd5e1' }}>{sub}</span>}
     </div>
   )
 }
@@ -129,7 +129,7 @@ function MetricCard({ label, value, unit, color = '#e6edf3', sub }: {
 // Status badge
 function StateBadge({ state }: { state: SystemState | null }) {
   if (state === null) return (
-    <span style={{ background: '#21262d', color: '#8b949e', padding: '4px 12px', borderRadius: 20, fontSize: 12 }}>
+    <span style={{ background: '#21262d', color: '#cbd5e1', padding: '4px 12px', borderRadius: 20, fontSize: 14 }}>
       N/A
     </span>
   )
@@ -137,10 +137,10 @@ function StateBadge({ state }: { state: SystemState | null }) {
   return (
     <span style={{
       background: m.bg, color: m.color, padding: '4px 12px', borderRadius: 20,
-      fontSize: 12, fontWeight: 500, border: `1px solid ${m.color}33`,
+      fontSize: 14, fontWeight: 500, border: `1px solid ${m.color}33`,
       display: 'inline-flex', alignItems: 'center', gap: 6
     }}>
-      <span style={{ fontSize: 10 }}>{m.icon}</span>
+      <span style={{ fontSize: 13 }}>{m.icon}</span>
       {m.label}
     </span>
   )
@@ -152,9 +152,9 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
   return (
     <div style={{
       background: '#161b22', border: '1px solid #30363d', borderRadius: 6,
-      padding: '10px 14px', fontFamily: 'IBM Plex Mono', fontSize: 12, color: '#e6edf3'
+      padding: '10px 14px', fontFamily: 'IBM Plex Mono', fontSize: 14, color: '#e6edf3'
     }}>
-      <p style={{ margin: '0 0 6px', color: '#8b949e', fontSize: 11 }}>{label}</p>
+      <p style={{ margin: '0 0 6px', color: '#cbd5e1', fontSize: 13 }}>{label}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ margin: '2px 0', color: p.color }}>
           {p.name}: {typeof p.value === 'number' ? p.value.toFixed(1) : p.value}
@@ -178,15 +178,15 @@ function StateDistribution({ feeds }: { feeds: SensorReading[] }) {
         const m = STATE_META[state]
         return (
           <div key={state} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ width: 72, fontSize: 11, color: m.color, fontWeight: 500 }}>{m.label}</span>
+            <span style={{ width: 72, fontSize: 13, color: m.color, fontWeight: 500 }}>{m.label}</span>
             <div style={{ flex: 1, height: 6, background: '#21262d', borderRadius: 3, overflow: 'hidden' }}>
               <div style={{
                 height: '100%', width: `${pct}%`, background: m.color,
                 borderRadius: 3, transition: 'width 0.6s ease'
               }} />
             </div>
-            <span style={{ width: 36, fontSize: 11, color: '#8b949e', textAlign: 'right' }}>{pct}%</span>
-            <span style={{ width: 24, fontSize: 11, color: '#636e7b', textAlign: 'right' }}>({count})</span>
+            <span style={{ width: 36, fontSize: 13, color: '#cbd5e1', textAlign: 'right' }}>{pct}%</span>
+            <span style={{ width: 24, fontSize: 13, color: 'var(--text-dim)', textAlign: 'right' }}>({count})</span>
           </div>
         )
       })}
@@ -199,7 +199,6 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
   const [latest, setLatest] = useState<SensorReading | null>(initialLatest)
   const [loading, setLoading] = useState(false)
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
-  const [activeChart, setActiveChart] = useState<'climate' | 'sensors'>('climate')
   const [autoRefresh, setAutoRefresh] = useState(true)
   const [countdown, setCountdown] = useState<number>(15)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -290,13 +289,13 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: 20 }}>🍄</span>
+            <span style={{ fontSize: 22 }}>🍄</span>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', lineHeight: 1.2 }}>
+              <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', lineHeight: 1.2 }}>
                 KUMBUNG JAMUR TIRAM
               </div>
-              <div style={{ fontSize: 10, color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
-                IoT CLIMATE CONTROL SYSTEM · ESP32 + THINGSPEAK
+              <div style={{ fontSize: 13, color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
+                IoT CLIMATE DASHBOARD
               </div>
             </div>
           </div>
@@ -315,7 +314,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 background: stateMeta.color, position: 'relative',
                 boxShadow: `0 0 0 3px ${stateMeta.color}30`
               }} />
-              <span style={{ fontSize: 12, color: stateMeta.color, fontWeight: 500 }}>
+              <span style={{ fontSize: 14, color: stateMeta.color, fontWeight: 500 }}>
                 {stateMeta.label}
               </span>
             </div>
@@ -323,7 +322,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: 11, color: '#636e7b' }}>
+          <span style={{ fontSize: 13, color: 'var(--text-dim)' }}>
             Update: {lastUpdate.toLocaleTimeString('id-ID')}
           </span>
 
@@ -333,16 +332,16 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             style={{
               background: autoRefresh ? '#0d2818' : '#21262d',
               border: `1px solid ${autoRefresh ? '#3fb95055' : '#30363d'}`,
-              color: autoRefresh ? '#3fb950' : '#8b949e',
-              padding: '5px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+              color: autoRefresh ? '#3fb950' : 'var(--text-dim)',
+              padding: '5px 12px', borderRadius: 6, fontSize: 13, cursor: 'pointer',
               fontFamily: 'IBM Plex Mono', display: 'flex', alignItems: 'center', gap: 6
             }}
           >
-            <span style={{ fontSize: 9 }}>●</span> AUTO {autoRefresh ? 'ON' : 'OFF'}
+            <span style={{ fontSize: 12 }}>●</span> AUTO {autoRefresh ? 'ON' : 'OFF'}
           </button>
 
           {autoRefresh && (
-            <span style={{ fontSize: 11, color: 'var(--text-dim)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>
+            <span style={{ fontSize: 13, color: 'var(--text-dim)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>
               ⏳ {countdown}s
             </span>
           )}
@@ -353,7 +352,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             title="Toggle theme"
             style={{
               background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)',
-              padding: '5px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer'
+              padding: '5px 10px', borderRadius: 6, fontSize: 13, cursor: 'pointer'
             }}
           >
             {theme === 'dark' ? '☀︎ Light' : '🌙 Dark'}
@@ -365,26 +364,13 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             disabled={loading}
             style={{
               background: '#161b22', border: '1px solid #30363d', color: '#e6edf3',
-              padding: '5px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+              padding: '5px 12px', borderRadius: 6, fontSize: 13, cursor: 'pointer',
               fontFamily: 'IBM Plex Mono', opacity: loading ? 0.6 : 1,
               display: 'flex', alignItems: 'center', gap: 6
             }}
           >
             {loading ? '⟳' : '↺'} REFRESH
           </button>
-
-          {/* ThingSpeak link */}
-          <a
-            href={`https://thingspeak.com/channels/${TS_CHANNEL_ID}`}
-            target="_blank" rel="noopener noreferrer"
-            style={{
-              background: '#161b22', border: '1px solid #30363d', color: '#58a6ff',
-              padding: '5px 12px', borderRadius: 6, fontSize: 11,
-              textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6
-            }}
-          >
-            ↗ THINGSPEAK
-          </a>
         </div>
       </header>
 
@@ -394,12 +380,12 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
         {error && (
           <div style={{
             background: '#2b0d0d', border: '1px solid #f8514955', borderRadius: 8,
-            padding: '12px 16px', marginBottom: 20, fontSize: 12, color: '#f85149',
+            padding: '12px 16px', marginBottom: 20, fontSize: 14, color: '#f85149',
             display: 'flex', alignItems: 'center', gap: 10
           }}>
             <span>⚠</span>
             <span>{error}</span>
-            <span style={{ marginLeft: 'auto', color: '#8b949e' }}>
+            <span style={{ marginLeft: 'auto', color: '#cbd5e1' }}>
               Channel ID: {TS_CHANNEL_ID} · Pastikan channel bersifat publik atau API key benar
             </span>
           </div>
@@ -413,10 +399,10 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             display: 'flex', alignItems: 'center', gap: 12,
             animation: 'pulse 2s ease infinite'
           }}>
-            <span style={{ fontSize: 20 }}>🚨</span>
+            <span style={{ fontSize: 22 }}>🚨</span>
             <div>
-              <div style={{ fontSize: 14, color: '#f85149', fontWeight: 600 }}>FAULT — AIR HABIS</div>
-              <div style={{ fontSize: 11, color: '#8b949e', marginTop: 2 }}>
+              <div style={{ fontSize: 16, color: '#f85149', fontWeight: 600 }}>FAULT — AIR HABIS</div>
+              <div style={{ fontSize: 13, color: '#cbd5e1', marginTop: 2 }}>
                 Tangki air kosong. Humidifier dikunci mati. Segera isi ulang tangki air!
               </div>
             </div>
@@ -429,10 +415,10 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             borderRadius: 8, padding: '14px 20px', marginBottom: 20,
             display: 'flex', alignItems: 'center', gap: 12
           }}>
-            <span style={{ fontSize: 20 }}>🚪</span>
+            <span style={{ fontSize: 22 }}>🚪</span>
             <div>
-              <div style={{ fontSize: 14, color: '#d29922', fontWeight: 600 }}>INTRUSION — PINTU TERBUKA</div>
-              <div style={{ fontSize: 11, color: '#8b949e', marginTop: 2 }}>
+              <div style={{ fontSize: 16, color: '#d29922', fontWeight: 600 }}>INTRUSION — PINTU TERBUKA</div>
+              <div style={{ fontSize: 13, color: '#cbd5e1', marginTop: 2 }}>
                 Cahaya terdeteksi masuk kumbung. Humidifier dimatikan untuk keselamatan operator.
               </div>
             </div>
@@ -447,7 +433,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
             padding: '20px 24px'
           }}>
-            <div style={{ fontSize: 10, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               Sensor Utama — Pembacaan Terakhir
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -472,7 +458,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
 
             <div style={{
               marginTop: 16, padding: '10px 14px',
-              background: '#0d1117', borderRadius: 6, fontSize: 11, color: '#636e7b'
+              background: '#0d1117', borderRadius: 6, fontSize: 13, color: 'var(--text-dim)'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span>Entry #{latest?.entry_id ?? '—'}</span>
@@ -516,122 +502,133 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
           </div>
         </div>
 
-        {/* CHARTS */}
-        <div style={{
-          background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
-          padding: '20px 24px', marginBottom: 20
-        }}>
-          {/* Chart tabs */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-            <div style={{ display: 'flex', gap: 4, background: '#0d1117', borderRadius: 6, padding: 3 }}>
-              {[
-                { key: 'climate', label: '🌡 Suhu & RH' },
-                { key: 'sensors', label: '📡 LDR & Tangki' },
-              ].map(tab => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveChart(tab.key as 'climate' | 'sensors')}
-                  style={{
-                    padding: '5px 14px', borderRadius: 5, cursor: 'pointer',
-                    fontSize: 11, fontFamily: 'IBM Plex Mono',
-                    background: activeChart === tab.key ? '#161b22' : 'transparent',
-                    color: activeChart === tab.key ? '#e6edf3' : '#8b949e',
-                    fontWeight: activeChart === tab.key ? 500 : 400,
-                    border: activeChart === tab.key ? '1px solid #30363d' : '1px solid transparent'
-                  }}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            <span style={{ fontSize: 10, color: '#636e7b' }}>
-              Menampilkan {Math.min(40, feeds.length)} pembacaan terakhir
-            </span>
-          </div>
+        {/* CHARTS — 2x2 GRID */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
 
-          {activeChart === 'climate' && (
-            <ResponsiveContainer width="100%" height={260}>
-              <AreaChart data={chartData} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+          {/* Chart 1: Suhu */}
+          <div style={{
+            background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
+            padding: '20px 24px'
+          }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+              🌡 Grafik Suhu
+            </div>
+            <ResponsiveContainer width="100%" height={240}>
+              <AreaChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
                 <defs>
                   <linearGradient id="gradSuhu" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#58a6ff" stopOpacity={0.15} />
                     <stop offset="95%" stopColor="#58a6ff" stopOpacity={0} />
                   </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
+                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                  tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
+                <YAxis domain={[15, 40]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
+                  tickLine={false} axisLine={false} width={40} />
+                <Tooltip content={<CustomTooltip />} />
+                <ReferenceLine y={28} stroke="#f8514944" strokeDasharray="4 4"
+                  label={{ value: '28°C max', position: 'right', fill: '#f85149', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <ReferenceLine y={22} stroke="#58a6ff44" strokeDasharray="4 4"
+                  label={{ value: '22°C min', position: 'right', fill: '#58a6ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <Area type="monotone" dataKey="suhu" stroke="#58a6ff" strokeWidth={2}
+                  fill="url(#gradSuhu)" name="Suhu (°C)" dot={false} activeDot={{ r: 4, fill: '#58a6ff' }} />
+              </AreaChart>
+            </ResponsiveContainer>
+            <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ width: 16, height: 2, background: '#58a6ff', borderRadius: 1 }} />
+              Optimal: 22–28°C
+            </div>
+          </div>
+
+          {/* Chart 2: Kelembapan */}
+          <div style={{
+            background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
+            padding: '20px 24px'
+          }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+              💧 Grafik Kelembapan
+            </div>
+            <ResponsiveContainer width="100%" height={240}>
+              <AreaChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
+                <defs>
                   <linearGradient id="gradHum" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#d2a8ff" stopOpacity={0.15} />
                     <stop offset="95%" stopColor="#d2a8ff" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-                <XAxis dataKey="time" tick={{ fontSize: 10, fill: '#8b949e', fontFamily: 'IBM Plex Mono' }}
-                  tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 6)} />
-                <YAxis yAxisId="suhu" domain={[15, 40]} tick={{ fontSize: 10, fill: '#8b949e', fontFamily: 'IBM Plex Mono' }}
-                  tickLine={false} axisLine={false} width={30} />
-                <YAxis yAxisId="hum" orientation="right" domain={[40, 100]}
-                  tick={{ fontSize: 10, fill: '#8b949e', fontFamily: 'IBM Plex Mono' }}
-                  tickLine={false} axisLine={false} width={30} />
+                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                  tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
+                <YAxis domain={[40, 100]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
+                  tickLine={false} axisLine={false} width={40} />
                 <Tooltip content={<CustomTooltip />} />
-                {/* Threshold lines */}
-                <ReferenceLine yAxisId="suhu" y={28} stroke="#f8514944" strokeDasharray="4 4"
-                  label={{ value: '28°C max', position: 'right', fill: '#f85149', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
-                <ReferenceLine yAxisId="suhu" y={22} stroke="#58a6ff44" strokeDasharray="4 4"
-                  label={{ value: '22°C min', position: 'right', fill: '#58a6ff', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
-                <ReferenceLine yAxisId="hum" y={80} stroke="#d2a8ff44" strokeDasharray="4 4"
-                  label={{ value: '80% RH', position: 'left', fill: '#d2a8ff', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
-                <Area yAxisId="suhu" type="monotone" dataKey="suhu" stroke="#58a6ff" strokeWidth={2}
-                  fill="url(#gradSuhu)" name="Suhu (°C)" dot={false} activeDot={{ r: 4, fill: '#58a6ff' }} />
-                <Area yAxisId="hum" type="monotone" dataKey="kelembapan" stroke="#d2a8ff" strokeWidth={2}
+                <ReferenceLine y={80} stroke="#d2a8ff44" strokeDasharray="4 4"
+                  label={{ value: '80% target', position: 'right', fill: '#d2a8ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <Area type="monotone" dataKey="kelembapan" stroke="#d2a8ff" strokeWidth={2}
                   fill="url(#gradHum)" name="Kelembapan (%)" dot={false} activeDot={{ r: 4, fill: '#d2a8ff' }} />
               </AreaChart>
             </ResponsiveContainer>
-          )}
+            <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ width: 16, height: 2, background: '#d2a8ff', borderRadius: 1 }} />
+              Target: ≥80% RH
+            </div>
+          </div>
 
-          {activeChart === 'sensors' && (
-            <ResponsiveContainer width="100%" height={260}>
-              <LineChart data={chartData} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+          {/* Chart 3: LDR */}
+          <div style={{
+            background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
+            padding: '20px 24px'
+          }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+              💡 Grafik Cahaya (LDR)
+            </div>
+            <ResponsiveContainer width="100%" height={240}>
+              <LineChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-                <XAxis dataKey="time" tick={{ fontSize: 10, fill: '#8b949e', fontFamily: 'IBM Plex Mono' }}
-                  tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 6)} />
-                <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: '#8b949e', fontFamily: 'IBM Plex Mono' }}
-                  tickLine={false} axisLine={false} width={30} />
+                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                  tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
+                <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
+                  tickLine={false} axisLine={false} width={40} />
                 <Tooltip content={<CustomTooltip />} />
                 <ReferenceLine y={75} stroke="#d2992244" strokeDasharray="4 4"
-                  label={{ value: 'intrusion thr', position: 'right', fill: '#d29922', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
-                <ReferenceLine y={10} stroke="#f8514944" strokeDasharray="4 4"
-                  label={{ value: 'fault thr', position: 'right', fill: '#f85149', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
+                  label={{ value: '75% intrusion', position: 'right', fill: '#d29922', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
                 <Line type="monotone" dataKey="ldr" stroke="#d29922" strokeWidth={2}
                   name="LDR (%)" dot={false} activeDot={{ r: 4 }} />
+              </LineChart>
+            </ResponsiveContainer>
+            <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ width: 16, height: 2, background: '#d29922', borderRadius: 1 }} />
+              &gt;75%: Pintu terbuka
+            </div>
+          </div>
+
+          {/* Chart 4: Tangki Air */}
+          <div style={{
+            background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
+            padding: '20px 24px'
+          }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+              💦 Grafik Level Tangki Air
+            </div>
+            <ResponsiveContainer width="100%" height={240}>
+              <LineChart data={chartData} margin={{ top: 5, right: 20, left: 45, bottom: 35 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
+                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                  tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
+                <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
+                  tickLine={false} axisLine={false} width={40} />
+                <Tooltip content={<CustomTooltip />} />
+                <ReferenceLine y={10} stroke="#f8514944" strokeDasharray="4 4"
+                  label={{ value: '10% fault', position: 'right', fill: '#f85149', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
                 <Line type="monotone" dataKey="water" stroke="#3fb950" strokeWidth={2}
                   name="Tangki Air (%)" dot={false} activeDot={{ r: 4 }} />
               </LineChart>
             </ResponsiveContainer>
-          )}
-
-          {/* Legend */}
-          <div style={{ display: 'flex', gap: 20, marginTop: 12, flexWrap: 'wrap' }}>
-            {activeChart === 'climate' ? (
-              <>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#8b949e' }}>
-                  <div style={{ width: 20, height: 2, background: '#58a6ff', borderRadius: 1 }} />
-                  Suhu (°C) · optimal 22–28°C
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#8b949e' }}>
-                  <div style={{ width: 20, height: 2, background: '#d2a8ff', borderRadius: 1 }} />
-                  Kelembapan (% RH) · target ≥80%
-                </div>
-              </>
-            ) : (
-              <>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#8b949e' }}>
-                  <div style={{ width: 20, height: 2, background: '#d29922', borderRadius: 1 }} />
-                  LDR (%) · &gt;75% = pintu terbuka
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#8b949e' }}>
-                  <div style={{ width: 20, height: 2, background: '#3fb950', borderRadius: 1 }} />
-                  Tangki Air (%) · &lt;10% = FAULT
-                </div>
-              </>
-            )}
+            <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ width: 16, height: 2, background: '#3fb950', borderRadius: 1 }} />
+              &lt;10%: FAULT
+            </div>
           </div>
         </div>
 
@@ -643,11 +640,11 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
             padding: '20px 24px'
           }}>
-            <div style={{ fontSize: 10, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               Distribusi State FSM
             </div>
             <StateDistribution feeds={feeds} />
-            <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #21262d', fontSize: 11, color: '#636e7b' }}>
+            <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #21262d', fontSize: 13, color: 'var(--text-dim)' }}>
               Berdasarkan {feeds.length} pembacaan terakhir
             </div>
           </div>
@@ -657,7 +654,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
             padding: '20px 24px'
           }}>
-            <div style={{ fontSize: 10, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               Referensi FSM & Threshold
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -672,12 +669,12 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                     transition: 'all 0.3s ease'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
-                      <span style={{ fontSize: 10, color: m.color, fontWeight: 600 }}>
+                      <span style={{ fontSize: 13, color: m.color, fontWeight: 600 }}>
                         P{s === 0 ? '—' : s} {m.label}
                       </span>
                       {isActive && <StateBadge state={s} />}
                     </div>
-                    <div style={{ fontSize: 10, color: '#636e7b' }}>{m.desc}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-dim)' }}>{m.desc}</div>
                   </div>
                 )
               })}
@@ -689,7 +686,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             background: '#161b22', border: '1px solid #30363d', borderRadius: 10,
             padding: '20px 24px', overflow: 'hidden'
           }}>
-            <div style={{ fontSize: 10, color: '#8b949e', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
+            <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               Log Pembacaan Terbaru
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4, maxHeight: 280, overflowY: 'auto' }}>
@@ -698,19 +695,19 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 return (
                   <div key={f.entry_id} style={{
                     display: 'grid', gridTemplateColumns: '80px 1fr 1fr 60px',
-                    gap: 6, fontSize: 10, padding: '5px 8px',
+                    gap: 6, fontSize: 13, padding: '5px 8px',
                     background: i === 0 ? '#0d2818' : 'transparent',
                     borderRadius: 4, alignItems: 'center',
                     borderBottom: '1px solid #21262d'
                   }}>
-                    <span style={{ color: '#636e7b' }}>{fmtTime(f.created_at)}</span>
+                    <span style={{ color: 'var(--text-dim)' }}>{fmtTime(f.created_at)}</span>
                     <span style={{ color: '#58a6ff' }}>
                       {fmt(f.suhu)}°C / {fmt(f.kelembapan, 0)}%
                     </span>
-                    <span style={{ color: '#8b949e' }}>
+                    <span style={{ color: '#cbd5e1' }}>
                       W:{fmt(f.waterLevel, 0)}% L:{fmt(f.ldr, 0)}%
                     </span>
-                    <span style={{ color: m?.color ?? '#636e7b', fontSize: 9, fontWeight: 500 }}>
+                    <span style={{ color: m?.color ?? 'var(--text-dim)', fontSize: 12, fontWeight: 500 }}>
                       {m?.label ?? '—'}
                     </span>
                   </div>
@@ -724,7 +721,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
         <footer style={{
           marginTop: 32, paddingTop: 16, borderTop: '1px solid #21262d',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          fontSize: 10, color: '#636e7b'
+          fontSize: 13, color: 'var(--text-dim)'
         }}>
           <span>
             Kumbung Jamur Tiram IoT — Sistem Kendali Iklim Mikro Adaptif

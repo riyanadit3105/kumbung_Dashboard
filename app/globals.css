@@ -4,16 +4,16 @@
 @tailwind utilities;
 
 :root {
-  --panel: #0d1117;
-  --surface: #161b22;
-  --border: #30363d;
+  --panel: #020617;
+  --surface: #111827;
+  --border: #394155;
   --accent: #3fb950;
   --warn: #d29922;
   --danger: #f85149;
   --info: #58a6ff;
-  --muted: #8b949e;
-  --text: #e6edf3;
-  --text-dim: #8b949e;
+  --muted: #cbd5e1;
+  --text: #f8fafc;
+  --text-dim: #cbd5e1;
 }
 
 * {
@@ -26,8 +26,8 @@ html, body {
   font-family: 'IBM Plex Mono', monospace;
   margin: 0;
   padding: 0;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.75;
 }
 
 /* Scrollbar */
@@ -44,7 +44,7 @@ html, body {
   border-radius: 6px;
   padding: 10px 14px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text);
 }
 
@@ -97,7 +97,7 @@ html, body {
   --warn: #b7791f; /* amber toned */
   --danger: #c53030; /* red */
   --info: #1e90ff; /* blue */
-  --muted: #6b7280; /* dim text */
+  --muted: #ffffff; /* dim text */
   --text: #0f1724; /* near-black for readability */
-  --text-dim: #4b5563;
+  --text-dim: #ffffff;
 }
