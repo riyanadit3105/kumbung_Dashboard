@@ -513,8 +513,8 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               🌡 Grafik Suhu
             </div>
-            <ResponsiveContainer width="100%" height={240}>
->              <AreaChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
+            <ResponsiveContainer width="100%" height={240} children={
+              <AreaChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <defs>
                   <linearGradient id="gradSuhu" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#58a6ff" stopOpacity={0.15} />
@@ -534,7 +534,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 <Area type="monotone" dataKey="suhu" stroke="#58a6ff" strokeWidth={2}
                   fill="url(#gradSuhu)" name="Suhu (°C)" dot={false} activeDot={{ r: 4, fill: '#58a6ff' }} />
               </AreaChart>
-            </ResponsiveContainer>
+            } />
             <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ width: 16, height: 2, background: '#58a6ff', borderRadius: 1 }} />
               Optimal: 22–28°C
@@ -549,8 +549,8 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               💧 Grafik Kelembapan
             </div>
-            <ResponsiveContainer width="100%" height={240}>
->              <AreaChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
+            <ResponsiveContainer width="100%" height={240} children={
+              <AreaChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <defs>
                   <linearGradient id="gradHum" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#d2a8ff" stopOpacity={0.15} />
@@ -568,7 +568,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 <Area type="monotone" dataKey="kelembapan" stroke="#d2a8ff" strokeWidth={2}
                   fill="url(#gradHum)" name="Kelembapan (%)" dot={false} activeDot={{ r: 4, fill: '#d2a8ff' }} />
               </AreaChart>
-            </ResponsiveContainer>
+            } />
             <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ width: 16, height: 2, background: '#d2a8ff', borderRadius: 1 }} />
               Target: ≥80% RH
@@ -583,7 +583,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               💡 Grafik Cahaya (LDR)
             </div>
-            <ResponsiveContainer width="100%" height={240}>
+            <ResponsiveContainer width="100%" height={240} children={
               <LineChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
                 <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
@@ -596,7 +596,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 <Line type="monotone" dataKey="ldr" stroke="#d29922" strokeWidth={2}
                   name="LDR (%)" dot={false} activeDot={{ r: 4 }} />
               </LineChart>
-            </ResponsiveContainer>
+            } />
             <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ width: 16, height: 2, background: '#d29922', borderRadius: 1 }} />
               &gt;75%: Pintu terbuka
@@ -611,7 +611,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
             <div style={{ fontSize: 13, color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
               💦 Grafik Level Tangki Air
             </div>
-            <ResponsiveContainer width="100%" height={240}>
+            <ResponsiveContainer width="100%" height={240} children={
               <LineChart data={chartData} margin={{ top: 5, right: 90, left: 45, bottom: 35 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
                 <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
@@ -624,7 +624,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 <Line type="monotone" dataKey="water" stroke="#3fb950" strokeWidth={2}
                   name="Tangki Air (%)" dot={false} activeDot={{ r: 4 }} />
               </LineChart>
-            </ResponsiveContainer>
+            } />
             <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ width: 16, height: 2, background: '#3fb950', borderRadius: 1 }} />
               &lt;10%: FAULT
