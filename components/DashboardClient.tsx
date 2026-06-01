@@ -201,6 +201,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
   const [activeChart, setActiveChart] = useState<'climate' | 'sensors'>('climate')
   const [autoRefresh, setAutoRefresh] = useState(true)
+  const [countdown, setCountdown] = useState<number>(15)
   const [error, setError] = useState<string | null>(fetchError)
 
   const refresh = useCallback(async () => {
@@ -221,10 +222,19 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
     }
   }, [])
 
-  // Auto-refresh every 15 seconds
+  // Auto-refresh countdown: when enabled, run a 15s countdown and call refresh() at 0
   useEffect(() => {
     if (!autoRefresh) return
-    const iv = setInterval(refresh, 15000)
+    setCountdown(15)
+    const iv = setInterval(() => {
+      setCountdown((c) => {
+        if (c <= 1) {
+          refresh()
+          return 15
+        }
+        return c - 1
+      })
+    }, 1000)
     return () => clearInterval(iv)
   }, [autoRefresh, refresh])
 
@@ -312,6 +322,12 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
           >
             <span style={{ fontSize: 9 }}>●</span> AUTO {autoRefresh ? 'ON' : 'OFF'}
           </button>
+
+          {autoRefresh && (
+            <span style={{ fontSize: 11, color: '#8b949e', padding: '4px 8px', borderRadius: 6, border: '1px solid #30363d' }}>
+              ⏳ {countdown}s
+            </span>
+          )}
 
           {/* Manual refresh */}
           <button
