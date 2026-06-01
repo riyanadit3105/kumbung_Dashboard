@@ -522,7 +522,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-                <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono', angle: -45, textAnchor: 'end', height: 70 }}
+                <XAxis dataKey="time" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 11, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={{ stroke: '#30363d' }} interval={Math.floor(chartData.length / 5)} />
                 <YAxis domain={[15, 40]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={false} width={40} />
