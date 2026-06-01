@@ -202,6 +202,14 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
   const [activeChart, setActiveChart] = useState<'climate' | 'sensors'>('climate')
   const [autoRefresh, setAutoRefresh] = useState(true)
   const [countdown, setCountdown] = useState<number>(15)
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      const t = localStorage.getItem('theme')
+      return (t === 'light' || t === 'dark') ? t : 'dark'
+    } catch {
+      return 'dark'
+    }
+  })
   const [error, setError] = useState<string | null>(fetchError)
 
   const refresh = useCallback(async () => {
@@ -238,6 +246,16 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
     return () => clearInterval(iv)
   }, [autoRefresh, refresh])
 
+  // Theme effect: apply to document and persist
+  useEffect(() => {
+    try {
+      document.documentElement.setAttribute('data-theme', theme)
+      localStorage.setItem('theme', theme)
+    } catch {
+      // ignore
+    }
+  }, [theme])
+
   // Chart data
   const chartData = feeds.slice(-40).map(f => ({
     time: fmtTime(f.created_at),
@@ -263,21 +281,21 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
   const isCritical = currentState === 4
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0d1117', color: '#e6edf3', fontFamily: 'IBM Plex Mono, monospace' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--panel)', color: 'var(--text)', fontFamily: 'IBM Plex Mono, monospace' }}>
       {/* Header */}
       <header style={{
-        borderBottom: '1px solid #30363d', padding: '12px 24px',
+        borderBottom: '1px solid var(--border)', padding: '12px 24px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        position: 'sticky', top: 0, background: '#0d1117', zIndex: 50
+        position: 'sticky', top: 0, background: 'var(--panel)', zIndex: 50
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontSize: 20 }}>🍄</span>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#e6edf3', lineHeight: 1.2 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', lineHeight: 1.2 }}>
                 KUMBUNG JAMUR TIRAM
               </div>
-              <div style={{ fontSize: 10, color: '#8b949e', letterSpacing: '0.08em' }}>
+              <div style={{ fontSize: 10, color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
                 IoT CLIMATE CONTROL SYSTEM · ESP32 + THINGSPEAK
               </div>
             </div>
@@ -324,10 +342,22 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
           </button>
 
           {autoRefresh && (
-            <span style={{ fontSize: 11, color: '#8b949e', padding: '4px 8px', borderRadius: 6, border: '1px solid #30363d' }}>
+            <span style={{ fontSize: 11, color: 'var(--text-dim)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>
               ⏳ {countdown}s
             </span>
           )}
+
+          {/* Theme toggle */}
+          <button
+            onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+            title="Toggle theme"
+            style={{
+              background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)',
+              padding: '5px 10px', borderRadius: 6, fontSize: 11, cursor: 'pointer'
+            }}
+          >
+            {theme === 'dark' ? '☀︎ Light' : '🌙 Dark'}
+          </button>
 
           {/* Manual refresh */}
           <button

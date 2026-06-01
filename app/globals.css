@@ -85,5 +85,19 @@ html, body {
 /* Grid lines */
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {
-  stroke: #21262d !important;
+  stroke: var(--border) !important;
+}
+
+/* Light theme (friendly, gentle contrast for older viewers) */
+[data-theme="light"] {
+  --panel: #f3f5f6; /* soft warm gray */
+  --surface: #ffffff; /* card surface */
+  --border: #e6edf3; /* subtle divider */
+  --accent: #2f855a; /* pleasant green */
+  --warn: #b7791f; /* amber toned */
+  --danger: #c53030; /* red */
+  --info: #1e90ff; /* blue */
+  --muted: #6b7280; /* dim text */
+  --text: #0f1724; /* near-black for readability */
+  --text-dim: #4b5563;
 }
