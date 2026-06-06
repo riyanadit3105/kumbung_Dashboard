@@ -96,8 +96,8 @@ export const STATE_META: Record<
   { label: string; color: string; bg: string; icon: string; desc: string }
 > = {
   0: { label: 'NORMAL', color: '#3fb950', bg: '#0d2818', icon: '✓', desc: 'Semua parameter optimal' },
-  1: { label: 'COOLING', color: '#58a6ff', bg: '#0d1b2e', icon: '❄', desc: 'Suhu > 27.5°C — kipas aktif' },
-  2: { label: 'EVAP_COOL', color: '#79c0ff', bg: '#0d1f2e', icon: '💧', desc: 'Suhu > 28.5°C — mist duty cycle atau mega blast' },
+  1: { label: 'COOLING', color: '#58a6ff', bg: '#0d1b2e', icon: '❄', desc: 'Suhu > 28.5°C — kipas aktif' },
+  2: { label: 'EVAP_COOL', color: '#79c0ff', bg: '#0d1f2e', icon: '💧', desc: 'Suhu > 29.5°C — mist duty cycle; MegaBlast jika >31°C' },
   3: { label: 'HUMIDIFY', color: '#d2a8ff', bg: '#1a0d2e', icon: '🌫', desc: 'RH rendah — mist maker diaktifkan' },
   4: { label: 'INTRUSION', color: '#d29922', bg: '#2b1e00', icon: '⚠', desc: 'Pintu terbuka terdeteksi' },
   5: { label: 'FAULT', color: '#f85149', bg: '#2b0d0d', icon: '✕', desc: 'Air habis — sistem terkunci' },

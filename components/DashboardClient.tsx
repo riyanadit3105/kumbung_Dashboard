@@ -527,17 +527,19 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 <YAxis domain={[15, 40]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={false} width={40} />
                 <Tooltip content={<CustomTooltip />} />
-                <ReferenceLine y={27.5} stroke="#58a6ff44" strokeDasharray="4 4"
-                  label={{ value: '27.5°C: cooling', position: 'right', fill: '#58a6ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
-                <ReferenceLine y={28.5} stroke="#f8514944" strokeDasharray="4 4"
-                  label={{ value: '28.5°C: evap start', position: 'right', fill: '#f85149', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <ReferenceLine y={28.5} stroke="#58a6ff44" strokeDasharray="4 4"
+                  label={{ value: '28.5°C: cooling', position: 'right', fill: '#58a6ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <ReferenceLine y={29.5} stroke="#f8514944" strokeDasharray="4 4"
+                  label={{ value: '29.5°C: evap start', position: 'right', fill: '#f85149', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <ReferenceLine y={31} stroke="#79c0ff44" strokeDasharray="4 4"
+                  label={{ value: '31°C: MegaBlast', position: 'right', fill: '#79c0ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
                 <Area type="monotone" dataKey="suhu" stroke="#58a6ff" strokeWidth={2}
                   fill="url(#gradSuhu)" name="Suhu (°C)" dot={false} activeDot={{ r: 4, fill: '#58a6ff' }} />
               </AreaChart>
             } />
             <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
               <div style={{ width: 16, height: 2, background: '#58a6ff', borderRadius: 1 }} />
-              Threshold: 27.5°C (fan), 28.5°C (evap)
+              Threshold: 28.5°C (fan), 29.5°C (evap), MegaBlast &gt;31°C
             </div>
           </div>
 
