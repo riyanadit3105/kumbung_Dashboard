@@ -4,14 +4,17 @@
 //   field2 = Kelembapan (% RH)
 //   field3 = LDR (%)
 //   field4 = Water Level (%)
-//   field5 = State (0=NORMAL,1=COOLING,2=HUMIDIFY,3=INTRUSION,4=FAULT)
+//   field5 = State (0=NORMAL,1=COOLING,2=EVAP_COOL,3=HUMIDIFY,4=INTRUSION,5=FAULT)
+//   field6 = Mist ON/OFF
+//   field7 = MegaBlast ON/OFF
+//   field8 = Flush ON/OFF
 
 export const TS_CHANNEL_ID = process.env.NEXT_PUBLIC_TS_CHANNEL_ID ?? '3396691' // public channel id
 export const TS_READ_KEY = process.env.TS_READ_KEY ?? 'O2781H5JSI2BVFZ0'
 export const TS_API_KEY = process.env.TS_API_KEY ?? '70JK2S31O47R00ZP'
 export const TS_BASE = process.env.TS_BASE ?? 'https://api.thingspeak.com'
 
-export type SystemState = 0 | 1 | 2 | 3 | 4
+export type SystemState = 0 | 1 | 2 | 3 | 4 | 5
 
 export interface SensorReading {
   created_at: string
@@ -21,6 +24,9 @@ export interface SensorReading {
   ldr: number | null
   waterLevel: number | null
   state: SystemState | null
+  mistOn: boolean | null
+  megaBlast: boolean | null
+  flushActive: boolean | null
 }
 
 export interface ChannelInfo {
@@ -45,6 +51,9 @@ interface RawFeed {
   field3?: string
   field4?: string
   field5?: string
+  field6?: string
+  field7?: string
+  field8?: string
 }
 
 function parseNum(v?: string): number | null {
@@ -56,8 +65,15 @@ function parseNum(v?: string): number | null {
 function parseState(v?: string): SystemState | null {
   if (!v) return null
   const n = parseInt(v)
-  if (isNaN(n) || n < 0 || n > 4) return null
+  if (isNaN(n) || n < 0 || n > 5) return null
   return n as SystemState
+}
+
+function parseBool(v?: string): boolean | null {
+  if (!v) return null
+  const n = parseInt(v)
+  if (isNaN(n)) return null
+  return n !== 0
 }
 
 export function mapFeed(feed: RawFeed): SensorReading {
@@ -69,6 +85,9 @@ export function mapFeed(feed: RawFeed): SensorReading {
     ldr: parseNum(feed.field3),
     waterLevel: parseNum(feed.field4),
     state: parseState(feed.field5),
+    mistOn: parseBool(feed.field6),
+    megaBlast: parseBool(feed.field7),
+    flushActive: parseBool(feed.field8),
   }
 }
 
@@ -77,10 +96,11 @@ export const STATE_META: Record<
   { label: string; color: string; bg: string; icon: string; desc: string }
 > = {
   0: { label: 'NORMAL', color: '#3fb950', bg: '#0d2818', icon: '✓', desc: 'Semua parameter optimal' },
-  1: { label: 'COOLING', color: '#58a6ff', bg: '#0d1b2e', icon: '❄', desc: 'Suhu terlalu tinggi — kipas aktif' },
-  2: { label: 'HUMIDIFY', color: '#d2a8ff', bg: '#1a0d2e', icon: '💧', desc: 'RH rendah — mist maker aktif' },
-  3: { label: 'INTRUSION', color: '#d29922', bg: '#2b1e00', icon: '⚠', desc: 'Pintu terbuka terdeteksi' },
-  4: { label: 'FAULT', color: '#f85149', bg: '#2b0d0d', icon: '✕', desc: 'Air habis — sistem terkunci' },
+  1: { label: 'COOLING', color: '#58a6ff', bg: '#0d1b2e', icon: '❄', desc: 'Suhu > 27.5°C — kipas aktif' },
+  2: { label: 'EVAP_COOL', color: '#79c0ff', bg: '#0d1f2e', icon: '💧', desc: 'Suhu > 28.5°C — mist duty cycle atau mega blast' },
+  3: { label: 'HUMIDIFY', color: '#d2a8ff', bg: '#1a0d2e', icon: '🌫', desc: 'RH rendah — mist maker diaktifkan' },
+  4: { label: 'INTRUSION', color: '#d29922', bg: '#2b1e00', icon: '⚠', desc: 'Pintu terbuka terdeteksi' },
+  5: { label: 'FAULT', color: '#f85149', bg: '#2b0d0d', icon: '✕', desc: 'Air habis — sistem terkunci' },
 }
 
 // Fetch last N readings

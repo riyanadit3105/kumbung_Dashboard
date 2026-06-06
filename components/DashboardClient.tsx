@@ -166,7 +166,7 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
 
 // State distribution bar
 function StateDistribution({ feeds }: { feeds: SensorReading[] }) {
-  const counts = [0, 1, 2, 3, 4].map(s => ({
+  const counts = [0, 1, 2, 3, 4, 5].map(s => ({
     state: s as SystemState,
     count: feeds.filter(f => f.state === s).length,
     pct: feeds.length ? Math.round((feeds.filter(f => f.state === s).length / feeds.length) * 100) : 0,
@@ -276,8 +276,8 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
   const currentState = latest?.state ?? null
   const stateMeta = currentState !== null ? STATE_META[currentState] : null
 
-  const isAlarm = currentState === 3 || currentState === 4
-  const isCritical = currentState === 4
+  const isAlarm = currentState === 3 || currentState === 4 || currentState === 5
+  const isCritical = currentState === 5
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--panel)', color: 'var(--text)', fontFamily: 'IBM Plex Mono, monospace' }}>
@@ -409,7 +409,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
           </div>
         )}
 
-        {currentState === 3 && (
+        {currentState === 4 && (
           <div style={{
             background: '#2b1e00', border: '1px solid #d29922',
             borderRadius: 8, padding: '14px 20px', marginBottom: 20,
@@ -527,17 +527,17 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
                 <YAxis domain={[15, 40]} tick={{ fontSize: 12, fill: 'var(--text-dim)', fontFamily: 'IBM Plex Mono' }}
                   tickLine={false} axisLine={false} width={40} />
                 <Tooltip content={<CustomTooltip />} />
-                <ReferenceLine y={28} stroke="#f8514944" strokeDasharray="4 4"
-                  label={{ value: '28°C max', position: 'right', fill: '#f85149', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
-                <ReferenceLine y={22} stroke="#58a6ff44" strokeDasharray="4 4"
-                  label={{ value: '22°C min', position: 'right', fill: '#58a6ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <ReferenceLine y={27.5} stroke="#58a6ff44" strokeDasharray="4 4"
+                  label={{ value: '27.5°C: cooling', position: 'right', fill: '#58a6ff', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
+                <ReferenceLine y={28.5} stroke="#f8514944" strokeDasharray="4 4"
+                  label={{ value: '28.5°C: evap start', position: 'right', fill: '#f85149', fontSize: 11, fontFamily: 'IBM Plex Mono' }} />
                 <Area type="monotone" dataKey="suhu" stroke="#58a6ff" strokeWidth={2}
                   fill="url(#gradSuhu)" name="Suhu (°C)" dot={false} activeDot={{ r: 4, fill: '#58a6ff' }} />
               </AreaChart>
             } />
-            <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ marginTop: 10, fontSize: 12, color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
               <div style={{ width: 16, height: 2, background: '#58a6ff', borderRadius: 1 }} />
-              Optimal: 22–28°C
+              Threshold: 27.5°C (fan), 28.5°C (evap)
             </div>
           </div>
 
@@ -658,7 +658,7 @@ export default function DashboardClient({ initialFeeds, initialLatest, fetchErro
               Referensi FSM & Threshold
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {([0, 1, 2, 3, 4] as SystemState[]).map(s => {
+              {([0, 1, 2, 3, 4, 5] as SystemState[]).map(s => {
                 const m = STATE_META[s]
                 const isActive = currentState === s
                 return (
